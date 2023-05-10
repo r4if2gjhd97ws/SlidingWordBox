@@ -48,7 +48,7 @@
 		47A89D5D2A09E64C00DF4E1C /* SlidingWordBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlidingWordBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A89D612A09E64C00DF4E1C /* SlidingWordBoxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordBoxUITests.swift; sourceTree = "<group>"; };
 		47A89D632A09E64C00DF4E1C /* SlidingWordBoxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordBoxUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSSS_WordBoxAnimationView.swift; sourceTree = "<group>"; };
+		47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SSSS_WordBoxAnimationView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordType.swift; sourceTree = "<group>"; };
 		47F815522A0A5674003D7821 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */

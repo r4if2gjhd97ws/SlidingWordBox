@@ -25,6 +25,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 SSSS_WordBoxAnimationView(SlidingWordType.friend.text, isAnimationActive: $isAnimationActive)
+                    .frame(maxWidth: .infinity)
             }
                 .padding()
     

@@ -12,7 +12,7 @@ struct SSSS_WordBox_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color(.gray)
-            SSSS_WordBox("Friend"
+            SSSS_WordBox("Friend", isAnimating: .constant(true)
 //                         ,isAnimationActive: .constant(false)
             )
         }
@@ -23,9 +23,9 @@ struct SSSS_SlidingRoundedRectangle_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color(.gray)
-            SSSS_WordBoxAnimationView("サンプルテキスト"
-                                      , isAnimationActive: .constant(true)
-            )
+//            SSSS_WordBoxAnimationView("サンプルテキスト"
+//                                      , isAnimationActive: .constant(true)
+//            )
         }
     }
 }

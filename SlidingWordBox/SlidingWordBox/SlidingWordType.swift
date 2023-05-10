@@ -8,6 +8,13 @@
 import Foundation
 import SwiftUI
 
+class APADeviceInfo: NSObject {
+
+
+    static let defaultDesignIPhoneSize = iPhone8Size
+    static let iPhone8Size = CGSize(width: 375, height: 667)
+}
+
 enum SlidingWordType: Int, CaseIterable {
     case may
     case eye
@@ -29,15 +36,21 @@ enum SlidingWordType: Int, CaseIterable {
         }
     }
 
+    var yValue: CGFloat {
+        return yRatio / APADeviceInfo.defaultDesignIPhoneSize.height * UIScreen.main.bounds.height
+    }
+
     var yRatio: CGFloat {
         switch self {
-        case .friend: return 2
-        case .car: return 1
-        case .to: return 4
-        case .went: return 6
-        case .last: return 8
-        case .eye: return 9
-        case .may: return 10
+        case .friend: return 154
+        case .car: return 33
+        case .to: return 51
+        case .went: return 67
+        case .last: return 133
+        case .eye: return 97
+        case .may: return 162
         }
     }
+
+
 }

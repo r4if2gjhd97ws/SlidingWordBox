@@ -8,165 +8,171 @@
 import Foundation
 import SwiftUI
 
-// 以下のソースコードを前提に、
-// SSSS_WordBoxCircleを画面のcenterXより右にはみ出たら白色に塗りつぶしてください
-
 struct SSSS_WordBox: View {
-    let text: String
+  let text: String
+  @Binding var isAnimating: Bool
+  @State private var pillWidth: CGFloat = 0
 
-    init(_ text: String) {
-        self.text = text
+  let margin: CGFloat = 16
+
+  init(_ text: String, isAnimating: Binding<Bool>) {
+    self.text = text
+    _isAnimating = isAnimating
+  }
+
+  var body: some View {
+    VStack {
+      HStack {
+        SSSS_WordBoxCircle(isAnimating: $isAnimating)
+          .frame(width: self.pillWidth, height: 27)
+      }
+      Text(text)
+        .frame(height: 20)
+        .background(.cyan)
+        .font(.system(size: 20))
+        .background(GeometryReader { textGeometry in
+        Color.clear
+          .preference(key: WidthPreferenceKey.self, value: textGeometry.size.width)
+      })
+
+      // TODO: 星マーク
+      Text("☆")
     }
-
-    var body: some View {
-        VStack {
-            SSSS_WordBoxCircle()
-                .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(Color.red, lineWidth: 1)
-            )
-                .frame(width: self.width, height: 27)
-            Text(text)
-                .font(.system(size: 20))
-                .padding(.horizontal, 16)
-                .background(GeometryReader { textGeometry in
-                Color.clear
-                    .preference(key: WidthPreferenceKey.self, value: textGeometry.size.width)
-            })
-
-            // TODO: 星マーク
-        }
-            .background(.yellow)
-            .onPreferenceChange(WidthPreferenceKey.self) { width in
-            self.width = width
-        }
+      .background(.yellow)
+      .onPreferenceChange(WidthPreferenceKey.self) { width in
+      self.pillWidth = width + margin * 2
+      print("\(text): \(width)")
     }
+  }
 
-    @State private var width: CGFloat = 0
-
-    struct WidthPreferenceKey: PreferenceKey {
-        static var defaultValue: CGFloat = 0
-        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-            value = nextValue()
-        }
+  struct WidthPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+      value = nextValue()
     }
+  }
 }
 
 struct SSSS_WordBoxCircle: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 14)
-            .fill(Color.blue)
+  @State private var coverOffset: CGFloat = 0
+  @Binding var isAnimating: Bool
 
+  var body: some View {
+    GeometryReader { geometry in
+      ZStack {
+        RoundedRectangle(cornerRadius: 14)
+          .fill(Color.clear)
+          .overlay(
+          Rectangle()
+            .fill(Color.white)
+            .offset(x: coverOffset)
+            .onAppear {
+            if isAnimating {
+              startAnimation(geometry.size)
+            }
+          })
+          .overlay(
+          RoundedRectangle(cornerRadius: 14)
+            .stroke(Color.red, lineWidth: 1)
+        )
+      }
+        .clipped()
+        .onAppear {
+        coverOffset = geometry.size.width
+      }
+        .onChange(of: isAnimating) { newValue in
+        if newValue {
+          startAnimation(geometry.size)
+        }
+      }
     }
+  }
+
+  private func startAnimation(_ size: CGSize) {
+    withAnimation(.linear(duration: 0.5)) {
+      coverOffset = 0
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      isAnimating = false
+      coverOffset = 0
+    }
+  }
 }
 
 struct SSSS_WordBoxContainerView: View {
-    var body: some View {
-        GeometryReader { geometry in
-            HStack {
-                ForEach(SlidingWordType.allCases, id: \.self) { word in
-                    VStack {
-                        Spacer()
-                            .frame(height: CGFloat.random(in: 0...geometry.size.height / 3))
-                        SSSS_WordBox(word.text)
-                        Spacer()
-                    }
-                }
-            }
-                .background(.cyan)
-                .frame(maxWidth: .infinity)
+  @Binding var isAnimating: Bool
+
+  var body: some View {
+    GeometryReader { geometry in
+      HStack {
+        ForEach(SlidingWordType.allCases, id: \.self) { word in
+          VStack {
+            Spacer()
+              .frame(height: word.yValue)
+              .frame(maxWidth: .infinity)
+            SSSS_WordBox(word.text, isAnimating: $isAnimating)
+          }
         }
+          .frame(maxWidth: .infinity)
+      }
     }
+  }
+
+  private func randomHeight(height: CGFloat) -> CGFloat {
+    let r = CGFloat.random(in: 0...height / 3)
+    print("randomHeight: \(r)")
+    return r
+  }
 }
-
-
 
 struct SSSS_WordBoxContainerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color(.gray)
-            SSSS_WordBoxContainerView()
-        }
+  static var previews: some View {
+    ZStack {
+      Color(.gray)
+      SSSS_WordBoxContainerView(isAnimating: .constant(false))
+        .frame(height: 400)
     }
+  }
 }
-
 
 
 struct SSSS_WordBoxAnimationView: View {
-    let text: String
-    @Binding private var isAnimationActive: Bool
-    @State private var width: CGFloat = 0
+  let text: String
+  @Binding private var isAnimationActive: Bool
+  @State private var width: CGFloat = 0
 
+  init(_ text: String, isAnimationActive: Binding<Bool>) {
+    self.text = text
+    _isAnimationActive = isAnimationActive
+  }
 
-    init(_ text: String, isAnimationActive: Binding<Bool>) {
-        self.text = text
-        _isAnimationActive = isAnimationActive
+  var body: some View {
+    GeometryReader { geometry in
+      ZStack(alignment: .center) {
+        container
+        centerLine(geometry.size)
+      }
     }
+  }
 
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .center) {
-                container
-                centerLine(geometry.size)
-            }
-        }
+  private var container: some View {
+    GeometryReader { geometry in
+      SSSS_WordBoxContainerView(isAnimating: .constant(false))
+        .offset(x: isAnimationActive ? UIScreen.main.bounds.width:
+//                  -UIScreen.main.bounds.width
+        -geometry.size.width
+      )
+        .frame(maxWidth: .infinity)
+        .animation(.linear(duration: 10)
+          .repeatForever(autoreverses: false)
+        , value: isAnimationActive)
     }
+  }
 
+  private func centerLine(_ size: CGSize) -> some View {
 
-    private var container: some View {
-        SSSS_WordBoxContainerView()
-            .offset(x: isAnimationActive ? UIScreen.main.bounds.width : -UIScreen.main.bounds.width)
-            .animation(Animation.linear(duration: 6).repeatForever(autoreverses: false), value: isAnimationActive)
-
-    }
-
-
-
-    private func centerLine(_ size: CGSize) -> some View {
-
-        Rectangle()
-            .fill(Color.white)
-            .frame(width: 2, height: size.height)
-    }
-
+    Rectangle()
+      .fill(Color.white)
+      .frame(width: 2, height: size.height)
+  }
 }
-
-
-class SlidingUtil {
-    static let durationSec = 10 // 秒
-    static var screenWidth: CGFloat {
-        return UIScreen.main.bounds.width
-    }
-
-    static func startAfter() {
-
-
-    }
-}
-
-
-/***
- duration = 10
- pill_width = 100
- screen_width = 1000
- 進ませる距離 = screen_width + pill_width = 1100
- [1pt / duration] = duration / 進ませる距離
- pill filling duration = [1pt / duration] x pill_width
- 
- 
- 
- let duration = 10
- let 進ませる距離 = screen_width + pill_width
- let durationPer1pt = duration / 進ませる距離
- animate(duration: duration, option: .curveLiner) {
- pill.x += 進ませる距離
- }
- 
- animate(duration: pill_width * durationPer1pt, delay: screen_width / 2 * durationPer1pt, option: .curveLiner) {
- // バックグラウンドカラーの表示
- }
- 
- 
- 
- 画面の左端から、右端までscreen_width分だけ動かしても、左側が見えたままなのでプラスでpill_width分さらに動かさないといけないのではと思い、上記に修正してみました
- */
