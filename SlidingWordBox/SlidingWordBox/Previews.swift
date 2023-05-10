@@ -12,7 +12,9 @@ struct SSSS_WordBox_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color(.gray)
-            SSSS_WordBox("Friend")
+            SSSS_WordBox("Friend"
+//                         ,isAnimationActive: .constant(false)
+            )
         }
     }
 }
@@ -21,16 +23,9 @@ struct SSSS_SlidingRoundedRectangle_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color(.gray)
-            SSSS_WordBoxAnimationView("サンプルテキスト", isAnimationActive: .constant(true))
-        }
-    }
-}
-
-struct SSSS_WordBoxContainerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color(.gray)
-            SSSS_WordBoxContainerView()
+            SSSS_WordBoxAnimationView("サンプルテキスト"
+                                      , isAnimationActive: .constant(true)
+            )
         }
     }
 }

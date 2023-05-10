@@ -13,7 +13,7 @@ struct ContentView: View {
 
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
             Color(.gray)
             VStack {
                 Image(systemName: "globe")
@@ -21,12 +21,15 @@ struct ContentView: View {
                     .foregroundColor(.accentColor)
                 Text("Hello, world!")
                 Button("start") {
-                    isAnimationActive = true
+                    isAnimationActive.toggle()
                 }
                 Spacer()
                 SSSS_WordBoxAnimationView(SlidingWordType.friend.text, isAnimationActive: $isAnimationActive)
             }
                 .padding()
+    
+
+
         }
     }
 
