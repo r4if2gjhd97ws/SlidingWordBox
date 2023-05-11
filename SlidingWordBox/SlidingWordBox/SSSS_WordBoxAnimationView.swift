@@ -23,7 +23,7 @@ struct SSSS_WordBox: View {
   var body: some View {
     VStack {
       HStack {
-        SSSS_WordBoxCircle(isAnimating: $isAnimating)
+        SSSS_WordBoxCircle(isAnimating: $isAnimating, pillWidth: pillWidth)
           .frame(width: self.pillWidth, height: 27)
       }
       Text(text)
@@ -56,6 +56,12 @@ struct SSSS_WordBox: View {
 struct SSSS_WordBoxCircle: View {
   @State private var coverOffset: CGFloat = 0
   @Binding var isAnimating: Bool
+  var pillWidth: CGFloat
+
+  init(isAnimating: Binding<Bool>, pillWidth: CGFloat) {
+    _isAnimating = isAnimating
+    self.pillWidth = pillWidth
+  }
 
   var body: some View {
     GeometryReader { geometry in
@@ -68,7 +74,7 @@ struct SSSS_WordBoxCircle: View {
             .offset(x: coverOffset)
             .onAppear {
             if isAnimating {
-              startAnimation(geometry.size)
+              startAnimation(geometry)
             }
           })
           .overlay(
@@ -76,25 +82,28 @@ struct SSSS_WordBoxCircle: View {
             .stroke(Color.red, lineWidth: 1)
         )
       }
-        .clipped()
-        .onAppear {
-        coverOffset = geometry.size.width
+//        .clipped()
+      .onAppear {
+        coverOffset = 0
+
+//          pillWidth
+        print("\(pillWidth)")
       }
         .onChange(of: isAnimating) { newValue in
         if newValue {
-          startAnimation(geometry.size)
+          startAnimation(geometry)
         }
       }
     }
   }
 
-  private func startAnimation(_ size: CGSize) {
-    withAnimation(.linear(duration: 0.5)) {
-      coverOffset = 0
+  private func startAnimation(_ geometry: GeometryProxy) {
+    withAnimation(.linear(duration: 1)) {
+//      coverOffset = geometry.frame(in: .local).minX
     }
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-      isAnimating = false
-      coverOffset = 0
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//      isAnimating = false
+//      coverOffset = 0
     }
   }
 }
@@ -157,10 +166,10 @@ struct SSSS_WordBoxAnimationView: View {
 
   private var container: some View {
     GeometryReader { geometry in
-      SSSS_WordBoxContainerView(isAnimating: .constant(false))
+      SSSS_WordBoxContainerView(isAnimating: $isAnimationActive)
         .offset(x: isAnimationActive ? UIScreen.main.bounds.width:
-//                  -UIScreen.main.bounds.width
-        -geometry.size.width
+                  -UIScreen.main.bounds.width
+//        -geometry.size.width
       )
         .frame(maxWidth: .infinity)
         .animation(.linear(duration: 10)
