@@ -9,12 +9,21 @@ import Foundation
 import SwiftUI
 
 struct SSSS_WordBox_Previews: PreviewProvider {
+
+    @State static var isAnimating: Bool = false
+
     static var previews: some View {
         ZStack {
             Color(.gray)
-            SSSS_WordBox("Friend", isAnimating: .constant(true)
-//                         ,isAnimationActive: .constant(false)
-            )
+            VStack {
+                SSSS_WordBox("Friend", isAnimating: $isAnimating
+                )
+                Spacer()
+                    .frame(height: 20)
+                Button("Toggle") {
+                    isAnimating = true
+                }
+            }
         }
     }
 }

@@ -17,6 +17,7 @@
 		47A89D712A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */; };
 		47A89D732A09E7FE00DF4E1C /* SlidingWordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */; };
 		47F815532A0A5674003D7821 /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F815522A0A5674003D7821 /* Previews.swift */; };
+		47F8158E2A0C90E5003D7821 /* SlidingWordConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SSSS_WordBoxAnimationView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordType.swift; sourceTree = "<group>"; };
 		47F815522A0A5674003D7821 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
+		47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordConst.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */,
 				47F815522A0A5674003D7821 /* Previews.swift */,
 				47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */,
+				47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */,
 				47A89D492A09E64C00DF4E1C /* Assets.xcassets */,
 				47A89D4B2A09E64C00DF4E1C /* SlidingWordBox.entitlements */,
 				47A89D4C2A09E64C00DF4E1C /* Preview Content */,
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F8158E2A0C90E5003D7821 /* SlidingWordConst.swift in Sources */,
 				47A89D732A09E7FE00DF4E1C /* SlidingWordType.swift in Sources */,
 				47A89D712A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift in Sources */,
 				47A89D482A09E64B00DF4E1C /* ContentView.swift in Sources */,

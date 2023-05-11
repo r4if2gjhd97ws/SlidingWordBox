@@ -23,7 +23,7 @@ struct SSSS_WordBox: View {
   var body: some View {
     VStack {
       HStack {
-        SSSS_WordBoxCircle(isAnimating: $isAnimating, pillWidth: pillWidth)
+        SSSS_WordBoxCircle(isAnimating: $isAnimating, pillWidth: $pillWidth)
           .frame(width: self.pillWidth, height: 27)
       }
       Text(text)
@@ -55,38 +55,43 @@ struct SSSS_WordBox: View {
 
 struct SSSS_WordBoxCircle: View {
   @State private var coverOffset: CGFloat = 0
-  @Binding var isAnimating: Bool
-  var pillWidth: CGFloat
+  var isAnimating: Bool = false
+  @Binding var pillWidth: CGFloat
 
-  init(isAnimating: Binding<Bool>, pillWidth: CGFloat) {
-    _isAnimating = isAnimating
-    self.pillWidth = pillWidth
+  init(isAnimating: Binding<Bool>, pillWidth: Binding<CGFloat>) {
+    self.isAnimating = isAnimating.wrappedValue
+    _pillWidth = pillWidth
   }
 
   var body: some View {
     GeometryReader { geometry in
       ZStack {
+        // 白い内側背景
         RoundedRectangle(cornerRadius: 14)
           .fill(Color.clear)
           .overlay(
           Rectangle()
             .fill(Color.white)
-            .offset(x: coverOffset)
+//            .position(x: coverOffset, y: 0)
+              .offset(x: coverOffset)
+//              .id(coverOffset)
+          .animation(isAnimating ? .linear(duration: 1) : .none, value: coverOffset)
             .onAppear {
             if isAnimating {
               startAnimation(geometry)
             }
           })
-          .overlay(
+        // 外枠
+        .overlay(
           RoundedRectangle(cornerRadius: 14)
             .stroke(Color.red, lineWidth: 1)
         )
       }
-//        .clipped()
+      //        .clipped()
       .onAppear {
-        coverOffset = 0
+        coverOffset = pillWidth
+//        / 2
 
-//          pillWidth
         print("\(pillWidth)")
       }
         .onChange(of: isAnimating) { newValue in
@@ -98,12 +103,16 @@ struct SSSS_WordBoxCircle: View {
   }
 
   private func startAnimation(_ geometry: GeometryProxy) {
-    withAnimation(.linear(duration: 1)) {
-//      coverOffset = geometry.frame(in: .local).minX
-    }
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//      isAnimating = false
-//      coverOffset = 0
+
+    //      coverOffset = geometry.frame(in: .local).minX
+
+//    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+      //      isAnimating = false
+      withAnimation(.linear(duration: 0.7)) {
+        coverOffset = 0
+
+
+//      }
     }
   }
 }
@@ -168,11 +177,11 @@ struct SSSS_WordBoxAnimationView: View {
     GeometryReader { geometry in
       SSSS_WordBoxContainerView(isAnimating: $isAnimationActive)
         .offset(x: isAnimationActive ? UIScreen.main.bounds.width:
-                  -UIScreen.main.bounds.width
+          -UIScreen.main.bounds.width
 //        -geometry.size.width
       )
         .frame(maxWidth: .infinity)
-        .animation(.linear(duration: 10)
+        .animation(.linear(duration: SlidingWordConst.slidingAnimeDuration)
           .repeatForever(autoreverses: false)
         , value: isAnimationActive)
     }
