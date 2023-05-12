@@ -109,12 +109,11 @@ struct SSSS_WordBoxContainerView: View {
   var body: some View {
     GeometryReader { geometry in
       HStack {
-
         ForEach(0..<SlidingWordType.allCases.count) { index in
           VStack {
             Spacer()
               .frame(height: SlidingWordType(rawValue: index)?.yValue ?? 0)
-              .frame(maxWidth: .infinity)
+
             SSSS_WordBox(SlidingWordType(rawValue: index)?.text ?? "--", isAnimating: $isAnimating, fillingAfter: CGFloat(SlidingWordType(rawValue: index)?.fillingAfter ?? 0))
           }
         }
@@ -139,7 +138,6 @@ struct SSSS_WordBoxContainerView_Previews: PreviewProvider {
     }
   }
 }
-
 
 struct SSSS_WordBoxAnimationView: View {
   let text: String
@@ -166,34 +164,23 @@ struct SSSS_WordBoxAnimationView: View {
     GeometryReader { geometry in
       SSSS_WordBoxContainerView(isAnimating: $isAnimationActive)
         .background(.pink)
-
-
         .offset(x: offsetX)
-//      .position(x: offsetX, y: geometry.size.height / 2)
       .onAppear {
         offsetX = 0
         //            - UIScreen.main.bounds.width
         - geometry.size.width
       }
         .animation(isAnimationActive ? .linear(duration: 3) : .none)
-
         .onChange(of: isAnimationActive) { newValue in
-
-        offsetX = isAnimationActive ?
-        10
-//          UIScreen.main.bounds.width
+        offsetX = isAnimationActive ? UIScreen.main.bounds.width
         : 0
-//            - UIScreen.main.bounds.width
-        - geometry.size.width
+            - UIScreen.main.bounds.width
+//        - geometry.size.width
       }
-
-
-
     }
   }
 
   private func centerLine(_ size: CGSize) -> some View {
-
     Rectangle()
       .fill(Color.white)
       .frame(width: 2, height: size.height)
