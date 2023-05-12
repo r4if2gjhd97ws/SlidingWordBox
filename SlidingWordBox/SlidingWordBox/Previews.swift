@@ -16,7 +16,7 @@ struct SSSS_WordBox_Previews: PreviewProvider {
         ZStack {
             Color(.gray)
             VStack {
-                SSSS_WordBox("Friend", isAnimating: $isAnimating
+                SSSS_WordBox("Friend", isAnimating: $isAnimating, fillingAfter: 0
                 )
                 Spacer()
                     .frame(height: 20)

@@ -25,7 +25,7 @@ struct ContentView: View {
                 Spacer()
                 
                 VStack {
-                    SSSS_WordBox("Friend", isAnimating: $isAnimating
+                    SSSS_WordBox("Friend", isAnimating: $isAnimating,fillingAfter: 0
                     )
                     Spacer()
                         .frame(height: 20)

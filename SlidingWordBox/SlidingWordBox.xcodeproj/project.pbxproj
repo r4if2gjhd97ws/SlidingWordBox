@@ -16,8 +16,13 @@
 		47A89D642A09E64C00DF4E1C /* SlidingWordBoxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A89D632A09E64C00DF4E1C /* SlidingWordBoxUITestsLaunchTests.swift */; };
 		47A89D712A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */; };
 		47A89D732A09E7FE00DF4E1C /* SlidingWordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */; };
+		47C171C52A0DC95F002DE161 /* UISS_WordBoxCircle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C171C32A0DC95F002DE161 /* UISS_WordBoxCircle.xib */; };
+		47C171C62A0DC95F002DE161 /* UISS_WordBoxCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C171C42A0DC95F002DE161 /* UISS_WordBoxCircle.swift */; };
+		47C171C82A0DC986002DE161 /* EEDispatchUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C171C72A0DC986002DE161 /* EEDispatchUtility.swift */; };
 		47F815532A0A5674003D7821 /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F815522A0A5674003D7821 /* Previews.swift */; };
 		47F8158E2A0C90E5003D7821 /* SlidingWordConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */; };
+		47F815902A0CC2DC003D7821 /* UISS_WordBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8158F2A0CC2DC003D7821 /* UISS_WordBox.swift */; };
+		47F815972A0CD1FC003D7821 /* EECommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F815962A0CD1FC003D7821 /* EECommonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +56,13 @@
 		47A89D632A09E64C00DF4E1C /* SlidingWordBoxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordBoxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SSSS_WordBoxAnimationView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordType.swift; sourceTree = "<group>"; };
+		47C171C32A0DC95F002DE161 /* UISS_WordBoxCircle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UISS_WordBoxCircle.xib; sourceTree = "<group>"; };
+		47C171C42A0DC95F002DE161 /* UISS_WordBoxCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISS_WordBoxCircle.swift; sourceTree = "<group>"; };
+		47C171C72A0DC986002DE161 /* EEDispatchUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EEDispatchUtility.swift; sourceTree = "<group>"; };
 		47F815522A0A5674003D7821 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
 		47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingWordConst.swift; sourceTree = "<group>"; };
+		47F8158F2A0CC2DC003D7821 /* UISS_WordBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISS_WordBox.swift; sourceTree = "<group>"; };
+		47F815962A0CD1FC003D7821 /* EECommonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EECommonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +113,14 @@
 		47A89D442A09E64B00DF4E1C /* SlidingWordBox */ = {
 			isa = PBXGroup;
 			children = (
+				47F815952A0CD1F2003D7821 /* New Group */,
 				47A89D452A09E64B00DF4E1C /* SlidingWordBoxApp.swift */,
 				47A89D472A09E64B00DF4E1C /* ContentView.swift */,
 				47A89D702A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift */,
+				47F8158F2A0CC2DC003D7821 /* UISS_WordBox.swift */,
 				47F815522A0A5674003D7821 /* Previews.swift */,
+				47C171C42A0DC95F002DE161 /* UISS_WordBoxCircle.swift */,
+				47C171C32A0DC95F002DE161 /* UISS_WordBoxCircle.xib */,
 				47A89D722A09E7FE00DF4E1C /* SlidingWordType.swift */,
 				47F8158D2A0C90E5003D7821 /* SlidingWordConst.swift */,
 				47A89D492A09E64C00DF4E1C /* Assets.xcassets */,
@@ -139,6 +153,15 @@
 				47A89D632A09E64C00DF4E1C /* SlidingWordBoxUITestsLaunchTests.swift */,
 			);
 			path = SlidingWordBoxUITests;
+			sourceTree = "<group>";
+		};
+		47F815952A0CD1F2003D7821 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				47C171C72A0DC986002DE161 /* EEDispatchUtility.swift */,
+				47F815962A0CD1FC003D7821 /* EECommonView.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47A89D4E2A09E64C00DF4E1C /* Preview Assets.xcassets in Resources */,
+				47C171C52A0DC95F002DE161 /* UISS_WordBoxCircle.xib in Resources */,
 				47A89D4A2A09E64C00DF4E1C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,8 +296,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				47F8158E2A0C90E5003D7821 /* SlidingWordConst.swift in Sources */,
+				47C171C82A0DC986002DE161 /* EEDispatchUtility.swift in Sources */,
 				47A89D732A09E7FE00DF4E1C /* SlidingWordType.swift in Sources */,
+				47C171C62A0DC95F002DE161 /* UISS_WordBoxCircle.swift in Sources */,
 				47A89D712A09E6F500DF4E1C /* SSSS_WordBoxAnimationView.swift in Sources */,
+				47F815972A0CD1FC003D7821 /* EECommonView.swift in Sources */,
+				47F815902A0CC2DC003D7821 /* UISS_WordBox.swift in Sources */,
 				47A89D482A09E64B00DF4E1C /* ContentView.swift in Sources */,
 				47F815532A0A5674003D7821 /* Previews.swift in Sources */,
 				47A89D462A09E64B00DF4E1C /* SlidingWordBoxApp.swift in Sources */,

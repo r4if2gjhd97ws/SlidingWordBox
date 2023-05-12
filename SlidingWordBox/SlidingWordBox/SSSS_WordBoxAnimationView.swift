@@ -8,22 +8,72 @@
 import Foundation
 import SwiftUI
 
+struct SSSS_WordBoxCircle: View {
+  @State private var coverOffset: CGFloat = 0
+  var isAnimating: Bool = false
+  @Binding var pillWidth: CGFloat
+
+  var fillingAfter: CGFloat = 0
+
+  init(isAnimating: Binding<Bool>, pillWidth: Binding<CGFloat>, fillingAfter: CGFloat) {
+    self.isAnimating = isAnimating.wrappedValue
+    _pillWidth = pillWidth
+    self.fillingAfter = fillingAfter
+  }
+
+  var body: some View {
+    GeometryReader { geometry in
+      ZStack {
+        // 白い内側背景
+        RoundedRectangle(cornerRadius: 14)
+          .fill(Color.clear)
+          .overlay(
+          Rectangle()
+            .fill(Color.white)
+            .padding(.leading, coverOffset)
+            .animation(isAnimating ? .linear(duration: 1) : .none, value: coverOffset)
+        )
+        // 外枠
+        .overlay(
+          RoundedRectangle(cornerRadius: 14)
+            .stroke(Color.red, lineWidth: 1)
+        )
+      }
+        .background(.purple)
+        .clipped()
+        .onAppear {
+        coverOffset = pillWidth
+        print("\(pillWidth)")
+      }
+        .onChange(of: isAnimating) { newValue in
+        if newValue {
+//          DispatchQueue.main.asyncAfter(deadline: .now() + fillingAfter) {
+          coverOffset = 0
+//          }
+        }
+      }
+    }
+  }
+}
+
 struct SSSS_WordBox: View {
   let text: String
   @Binding var isAnimating: Bool
   @State private var pillWidth: CGFloat = 0
+  var fillingAfter: CGFloat = 0
 
   let margin: CGFloat = 16
 
-  init(_ text: String, isAnimating: Binding<Bool>) {
+  init(_ text: String, isAnimating: Binding<Bool>, fillingAfter: CGFloat) {
     self.text = text
     _isAnimating = isAnimating
+    self.fillingAfter = fillingAfter
   }
 
   var body: some View {
     VStack {
       HStack {
-        SSSS_WordBoxCircle(isAnimating: $isAnimating, pillWidth: $pillWidth)
+        UISS_WordBoxCircleRepresentable(isAnimating: $isAnimating, pillWidth: $pillWidth, fillingAfter: fillingAfter)
           .frame(width: self.pillWidth, height: 27)
       }
       Text(text)
@@ -53,82 +103,19 @@ struct SSSS_WordBox: View {
   }
 }
 
-struct SSSS_WordBoxCircle: View {
-  @State private var coverOffset: CGFloat = 0
-  var isAnimating: Bool = false
-  @Binding var pillWidth: CGFloat
-
-  init(isAnimating: Binding<Bool>, pillWidth: Binding<CGFloat>) {
-    self.isAnimating = isAnimating.wrappedValue
-    _pillWidth = pillWidth
-  }
-
-  var body: some View {
-    GeometryReader { geometry in
-      ZStack {
-        // 白い内側背景
-        RoundedRectangle(cornerRadius: 14)
-          .fill(Color.clear)
-          .overlay(
-          Rectangle()
-            .fill(Color.white)
-//            .position(x: coverOffset, y: 0)
-              .offset(x: coverOffset)
-//              .id(coverOffset)
-          .animation(isAnimating ? .linear(duration: 1) : .none, value: coverOffset)
-            .onAppear {
-            if isAnimating {
-              startAnimation(geometry)
-            }
-          })
-        // 外枠
-        .overlay(
-          RoundedRectangle(cornerRadius: 14)
-            .stroke(Color.red, lineWidth: 1)
-        )
-      }
-      //        .clipped()
-      .onAppear {
-        coverOffset = pillWidth
-//        / 2
-
-        print("\(pillWidth)")
-      }
-        .onChange(of: isAnimating) { newValue in
-        if newValue {
-          startAnimation(geometry)
-        }
-      }
-    }
-  }
-
-  private func startAnimation(_ geometry: GeometryProxy) {
-
-    //      coverOffset = geometry.frame(in: .local).minX
-
-//    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-      //      isAnimating = false
-      withAnimation(.linear(duration: 0.7)) {
-        coverOffset = 0
-
-
-//      }
-    }
-  }
-}
-
 struct SSSS_WordBoxContainerView: View {
   @Binding var isAnimating: Bool
 
   var body: some View {
     GeometryReader { geometry in
       HStack {
-        ForEach(SlidingWordType.allCases, id: \.self) { word in
+
+        ForEach(0..<SlidingWordType.allCases.count) { index in
           VStack {
             Spacer()
-              .frame(height: word.yValue)
+              .frame(height: SlidingWordType(rawValue: index)?.yValue ?? 0)
               .frame(maxWidth: .infinity)
-            SSSS_WordBox(word.text, isAnimating: $isAnimating)
+            SSSS_WordBox(SlidingWordType(rawValue: index)?.text ?? "--", isAnimating: $isAnimating, fillingAfter: CGFloat(SlidingWordType(rawValue: index)?.fillingAfter ?? 0))
           }
         }
           .frame(maxWidth: .infinity)
@@ -158,6 +145,7 @@ struct SSSS_WordBoxAnimationView: View {
   let text: String
   @Binding private var isAnimationActive: Bool
   @State private var width: CGFloat = 0
+  @State private var offsetX: CGFloat = 0
 
   init(_ text: String, isAnimationActive: Binding<Bool>) {
     self.text = text
@@ -168,6 +156,7 @@ struct SSSS_WordBoxAnimationView: View {
     GeometryReader { geometry in
       ZStack(alignment: .center) {
         container
+
         centerLine(geometry.size)
       }
     }
@@ -176,14 +165,30 @@ struct SSSS_WordBoxAnimationView: View {
   private var container: some View {
     GeometryReader { geometry in
       SSSS_WordBoxContainerView(isAnimating: $isAnimationActive)
-        .offset(x: isAnimationActive ? UIScreen.main.bounds.width:
-          -UIScreen.main.bounds.width
-//        -geometry.size.width
-      )
-        .frame(maxWidth: .infinity)
-        .animation(.linear(duration: SlidingWordConst.slidingAnimeDuration)
-          .repeatForever(autoreverses: false)
-        , value: isAnimationActive)
+        .background(.pink)
+
+
+        .offset(x: offsetX)
+//      .position(x: offsetX, y: geometry.size.height / 2)
+      .onAppear {
+        offsetX = 0
+        //            - UIScreen.main.bounds.width
+        - geometry.size.width
+      }
+        .animation(isAnimationActive ? .linear(duration: 3) : .none)
+
+        .onChange(of: isAnimationActive) { newValue in
+
+        offsetX = isAnimationActive ?
+        10
+//          UIScreen.main.bounds.width
+        : 0
+//            - UIScreen.main.bounds.width
+        - geometry.size.width
+      }
+
+
+
     }
   }
 

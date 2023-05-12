@@ -52,5 +52,15 @@ enum SlidingWordType: Int, CaseIterable {
         }
     }
 
-
+    var fillingAfter: Int {
+        switch self {
+        case .friend: return 1
+        case .car: return 2
+        case .to: return 3
+        case .went: return 4
+        case .last: return 5
+        case .eye: return 6
+        case .may: return 7
+        }
+    }
 }
